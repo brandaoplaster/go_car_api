@@ -5,7 +5,7 @@ config :go_car_api, GoCarApi.Repo,
   username: "postgres",
   password: "postgres",
   database: "go_car_api_dev",
-  hostname: "localhost",
+  hostname: "postgres",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
