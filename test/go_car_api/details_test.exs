@@ -61,4 +61,61 @@ defmodule GoCarApi.DetailsTest do
       assert %Ecto.Changeset{} = Details.change_brand(brand)
     end
   end
+
+  describe "specifications" do
+    alias GoCarApi.Details.Specification
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def specification_fixture(attrs \\ %{}) do
+      {:ok, specification} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Details.create_specification()
+
+      specification
+    end
+
+    test "list_specifications/0 returns all specifications" do
+      specification = specification_fixture()
+      assert Details.list_specifications() == [specification]
+    end
+
+    test "get_specification!/1 returns the specification with given id" do
+      specification = specification_fixture()
+      assert Details.get_specification!(specification.id) == specification
+    end
+
+    test "create_specification/1 with valid data creates a specification" do
+      assert {:ok, %Specification{} = specification} = Details.create_specification(@valid_attrs)
+    end
+
+    test "create_specification/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Details.create_specification(@invalid_attrs)
+    end
+
+    test "update_specification/2 with valid data updates the specification" do
+      specification = specification_fixture()
+      assert {:ok, %Specification{} = specification} = Details.update_specification(specification, @update_attrs)
+    end
+
+    test "update_specification/2 with invalid data returns error changeset" do
+      specification = specification_fixture()
+      assert {:error, %Ecto.Changeset{}} = Details.update_specification(specification, @invalid_attrs)
+      assert specification == Details.get_specification!(specification.id)
+    end
+
+    test "delete_specification/1 deletes the specification" do
+      specification = specification_fixture()
+      assert {:ok, %Specification{}} = Details.delete_specification(specification)
+      assert_raise Ecto.NoResultsError, fn -> Details.get_specification!(specification.id) end
+    end
+
+    test "change_specification/1 returns a specification changeset" do
+      specification = specification_fixture()
+      assert %Ecto.Changeset{} = Details.change_specification(specification)
+    end
+  end
 end
